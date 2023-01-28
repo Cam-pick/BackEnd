@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController // JSON 형태 결과값을 반환해줌
+@RestController // JSON 형태 결과값을 반환해줌.
 @RequiredArgsConstructor // final 객체를 Constructor Injection 해줌. Autowired 역할
 public class TestController {
 
