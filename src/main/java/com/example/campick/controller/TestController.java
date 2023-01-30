@@ -13,7 +13,7 @@ public class TestController {
 
     private final TestService testService;
 
-    @GetMapping(value = "/health-check.")
+    @GetMapping(value = "/health-check")
     public ResponseEntity<?> test(){
         TestDto testDto = testService.test();
         return ResponseEntity.ok(testDto);
