@@ -21,10 +21,10 @@ public class ChatroomEntity extends BaseEntity {
     private Long chatroomIdx;
 
     // 연관 관계
-    @OneToMany(mappedBy = "chatroomEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "chatroomEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatEntity> chatEntities = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(referencedColumnName = "userIdx", name = "fromIdx", updatable = false)
     private UserEntity fromUserEntity;
 
@@ -32,7 +32,7 @@ public class ChatroomEntity extends BaseEntity {
         this.fromUserEntity = userEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne( fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(referencedColumnName = "userIdx", name = "toIdx", updatable = false)
     private UserEntity toUserEntity;
 

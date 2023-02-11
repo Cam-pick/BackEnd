@@ -2,10 +2,7 @@ package com.example.campick.model.entity;
 
 import com.example.campick.model.BaseEntity;
 import com.example.campick.model.Role;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -19,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @DynamicInsert
+@ToString
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,25 +45,25 @@ public class UserEntity extends BaseEntity {
 
 
     // 연관 관계
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE, orphanRemoval = true) // FK가 없는 쪽에 mappedBy 사용을 추천
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true) // FK가 없는 쪽에 mappedBy 사용을 추천
     private List<PartyEntity> partyEntities = new ArrayList<>(); // 엔티티에 Null이 있는 것은 좋지 않기 때문에 ArrayList 인스턴스를 넣어 Null을 방지합니다.
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApplyEntity> applyEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PickEntity> pickEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardEntity> boardEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEntity> commentEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "fromUserEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "fromUserEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatroomEntity> chatroomEntities1 = new ArrayList<>();
 
-    @OneToMany(mappedBy = "toUserEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "toUserEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatroomEntity> chatroomEntities2 = new ArrayList<>();
 
 

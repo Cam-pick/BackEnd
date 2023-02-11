@@ -22,7 +22,7 @@ public class ChatEntity extends BaseEntity {
     private String message;
 
     // 연관 관계
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = ChatroomEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ChatroomEntity.class)
     @JoinColumn(name = "chatroomIdx", updatable = false)
     private ChatroomEntity chatroomEntity;
 
@@ -30,7 +30,7 @@ public class ChatEntity extends BaseEntity {
         this.chatroomEntity = chatroomEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 

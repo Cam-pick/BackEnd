@@ -22,7 +22,7 @@ public class ReplyEntity extends BaseEntity {
     private String comment;
 
     // 연관 관계
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 
@@ -30,7 +30,7 @@ public class ReplyEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = CommentEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = CommentEntity.class)
     @JoinColumn(name = "commentIdx", updatable = false)
     private CommentEntity commentEntity;
 

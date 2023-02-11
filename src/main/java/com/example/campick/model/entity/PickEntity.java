@@ -19,7 +19,7 @@ public class PickEntity extends BaseEntity {
     private Long pickIdx;
 
     // 연관 관계
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 
@@ -27,7 +27,7 @@ public class PickEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = PartyEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = PartyEntity.class)
     @JoinColumn(name = "partyIdx", updatable = false)
     private PartyEntity partyEntity;
 

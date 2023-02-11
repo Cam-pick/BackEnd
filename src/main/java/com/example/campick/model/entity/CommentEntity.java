@@ -25,10 +25,10 @@ public class CommentEntity extends BaseEntity {
     private String comment;
 
     // 연관 관계
-    @OneToMany(mappedBy = "commentEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "commentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReplyEntity> replyEntities = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 
@@ -36,7 +36,7 @@ public class CommentEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = BoardEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = BoardEntity.class)
     @JoinColumn(name = "boardIdx", updatable = false)
     private BoardEntity boardEntity;
 

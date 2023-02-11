@@ -31,10 +31,10 @@ public class BoardEntity extends BaseEntity {
     private String category;
 
     // 연관 관계
-    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEntity> commentEntities = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 

@@ -34,13 +34,13 @@ public class PartyEntity extends BaseEntity {
     private String tag;
 
     // 연관 관계
-    @OneToMany(mappedBy = "partyEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "partyEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApplyEntity> applyEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "partyEntity", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "partyEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PickEntity> pickEntities = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     @JoinColumn(name = "userIdx", updatable = false)
     private UserEntity userEntity;
 
