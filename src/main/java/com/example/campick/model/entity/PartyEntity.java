@@ -33,6 +33,13 @@ public class PartyEntity extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String tag;
 
+    @Column
+    private Integer capacity;
+
+    @Column(length = 50)
+    private String period;
+
+
     // 연관 관계
     @OneToMany(mappedBy = "partyEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApplyEntity> applyEntities = new ArrayList<>();
@@ -50,12 +57,14 @@ public class PartyEntity extends BaseEntity {
     }
 
     @Builder
-    public PartyEntity(Long partyIdx, String title, String contents, String imageUrl, String tag) {
+    public PartyEntity(Long partyIdx, String title, String contents, String imageUrl, String tag, Integer capacity, String period) {
         this.partyIdx = partyIdx;
         this.title = title;
         this.contents = contents;
         this.imageUrl = imageUrl;
         this.tag = tag;
+        this.capacity = capacity;
+        this.period = period;
     }
 
 }

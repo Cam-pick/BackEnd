@@ -35,6 +35,8 @@ public class UserRepositoryTest {
                 .title("영어 공부 모임")
                 .contents("영어 공부 모임 : 1시30분 / 강남역")
                 .tag("#영어#공부")
+                .capacity(4)
+                .period("2023-02-14 ~ 2023-02-20")
                 .build();
 
         partyEntity.setUserIdx(userEntity);
