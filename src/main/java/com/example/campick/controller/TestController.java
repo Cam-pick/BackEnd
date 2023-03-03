@@ -18,4 +18,9 @@ public class TestController {
         TestDto testDto = testService.test();
         return ResponseEntity.ok(testDto);
     }
+
+    @GetMapping("/app/test")
+    public ResponseEntity<?> testJwt() {
+        return ResponseEntity.ok("jwt test success");
+    }
 }

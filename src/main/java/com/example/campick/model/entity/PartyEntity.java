@@ -20,7 +20,7 @@ public class PartyEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partyIdx;
 
-    @Column(length = 20, unique = true, nullable = false)
+    @Column(length = 20, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -64,6 +64,17 @@ public class PartyEntity extends BaseEntity {
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.userEntity = userEntity;
+    }
+
+    public void update(String title, String contents, String imageUrl,
+                       String tag, Integer capacity, Timestamp startDate, Timestamp dueDate) {
+        this.title = title;
+        this.contents = contents;
+        this.imageUrl = imageUrl;
+        this.tag = tag;
+        this.capacity = capacity;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
     }
 
 }

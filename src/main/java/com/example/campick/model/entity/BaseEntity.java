@@ -1,6 +1,7 @@
 package com.example.campick.model.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,7 +21,12 @@ public class BaseEntity {
     private LocalDateTime updatedAt;
     @ColumnDefault("'A'")
     private String status;
-//    @PrePersist
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    //    @PrePersist
 //    public void prePersist() {
 //        this.status = this.status == null ? "A" : this.status;
 //    }
