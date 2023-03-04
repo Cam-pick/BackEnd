@@ -26,8 +26,6 @@ public class JwtTokenProvider {
 
     // Access 토큰 유효시간 30분
     private long accessTokenValidTime = 30 * 60 * 1000L;
-    // Refresh 토큰 유효시간 60분
-    private long refreshTokenValidTime = 60 * 60 * 1000L;
 
     private final SecurityUserDetailService securityUserDetailService;
 
@@ -37,20 +35,13 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createAccessToken(String userPK, Role roles) {
-        Claims claims = Jwts.claims().setSubject(userPK); // JWT payload에 저장되는 정보 단위
+    public String createAccessToken(Long userIdx, Role roles) {
+        Claims claims = Jwts.claims().setSubject(String.valueOf(userIdx)); // JWT payload에 저장되는 정보 단위
         claims.put("roles", roles); // 정보 저장 (key-value)
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + accessTokenValidTime)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 signature에 들어갈 secret 값 세팅
-                .compact();
-    }
-    public String createRefreshToken(String userPK, Role roles) {
-        Date now = new Date();
-        return Jwts.builder()
                 .setExpiration(new Date(now.getTime() + accessTokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 signature에 들어갈 secret 값 세팅
                 .compact();
@@ -72,10 +63,6 @@ public class JwtTokenProvider {
         return request.getHeader("ACCESS_TOKEN");
     }
 
-    public String resolveRefreshToken(HttpServletRequest request) {
-        return request.getHeader("REFRESH_TOKEN");
-    }
-
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateAccessToken(String accessToken) {
         try {
@@ -85,20 +72,6 @@ public class JwtTokenProvider {
             log.info("JWT claims string is empty.", e);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
-        }
-        return false;
-    }
-
-    public boolean validateRefreshToken(String refreshToken) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
-        } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
-        } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
         }
         return false;
     }

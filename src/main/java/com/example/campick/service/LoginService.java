@@ -30,6 +30,7 @@ public class LoginService {
      */
     @Transactional
     public PostJoinRes join(PostJoinReq postJoinReq) {
+
         UserEntity userEntity = loginRepository.save(UserEntity.builder()
                         .uniqueId(postJoinReq.getUniqueId())
                         .nickname(postJoinReq.getNickname())
@@ -47,15 +48,32 @@ public class LoginService {
      */
     @Transactional
     public PostLoginRes login(PostLoginReq postLoginReq) {
-        UserEntity userEntity = loginRepository.findByUniqueId(postLoginReq.getUniqueId())
-                .orElseThrow(() -> new IllegalArgumentException("가입 되지 않은 이메일입니다."));
+
+        UserEntity userEntity = loginRepository.findByUniqueIdAndStatus(postLoginReq.getUniqueId(), "A")
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 아이디입니다."));
         if (!passwordEncoder.matches(postLoginReq.getPassword(), userEntity.getPassword())) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 맞지 않습니다.");
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 맞지 않습니다.");
         }
 
-        String accessToken = jwtTokenProvider.createAccessToken(userEntity.getUniqueId(), userEntity.getRole());
+        String accessToken = jwtTokenProvider.createAccessToken(userEntity.getUserIdx(), userEntity.getRole());
 
         return new PostLoginRes(userEntity.getUserIdx(), accessToken);
+
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @Transactional
+    public void resign(Long userIdx) {
+
+        UserEntity userEntity = loginRepository.findByUserIdxAndStatus(userIdx, "A")
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 회원 인덱스입니다."));
+
+        userEntity.setStatus("D");
+
+        loginRepository.save(userEntity);
+
     }
 
 }

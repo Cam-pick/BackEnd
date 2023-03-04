@@ -21,7 +21,7 @@ public class SecurityUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = loginRepository.findByUniqueId(username)
+        UserEntity userEntity = loginRepository.findById(Long.valueOf(username))
                         .orElseThrow(() -> new UsernameNotFoundException(username + " 사용자 없음"));
         return new SecurityUser(userEntity); // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     }

@@ -75,4 +75,5 @@ public class UserEntity extends BaseEntity {
         this.imageUrl = imageUrl;
         this.role = role;
     }
+
 }

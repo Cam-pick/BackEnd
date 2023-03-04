@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface LoginRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findByUniqueId(String uniqueId);
+    Optional<UserEntity> findByUniqueIdAndStatus(String uniqueId, String status);
 
+    Optional<UserEntity> findByUserIdxAndStatus(Long userIdx, String status);
 }
