@@ -20,6 +20,10 @@ public class BaseEntity {
     private LocalDateTime updatedAt;
     @ColumnDefault("'A'")
     private String status;
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 //    @PrePersist
 //    public void prePersist() {
 //        this.status = this.status == null ? "A" : this.status;
