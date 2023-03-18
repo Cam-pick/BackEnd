@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .authorizeRequests() // 요청에 대한 사용 권한 체크합니다.
                 .antMatchers("/admin/**").hasRole("ADMIN") // 사용자가 주어진 역할이 있다면 접근을 허용합니다.
                 .antMatchers("/users/{userIdx}/d").authenticated() // 인증된 사용자의 접근을 허용합니다.
+                .antMatchers("/parties/**").authenticated()
                 .anyRequest().permitAll() // 그 외 나머지 요청은 누구나 접근 가능합니다.
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // JwtAuthenticationFilter 를 UsernamePasswordAuthenticationFilter 전에 넣음

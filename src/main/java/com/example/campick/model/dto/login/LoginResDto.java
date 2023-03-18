@@ -1,4 +1,4 @@
-package com.example.campick.model.dto;
+package com.example.campick.model.dto.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
