@@ -3,9 +3,10 @@ package com.example.campick.controller;
 import com.example.campick.error.UserErrorCode;
 import com.example.campick.exception.User.UserNotFoundException;
 import com.example.campick.jwt.JwtTokenProvider;
-import com.example.campick.model.dto.JoinDto;
-import com.example.campick.model.dto.LoginReqDto;
-import com.example.campick.model.dto.LoginResDto;
+import com.example.campick.model.dto.login.JoinReqDto;
+import com.example.campick.model.dto.login.JoinResDto;
+import com.example.campick.model.dto.login.LoginReqDto;
+import com.example.campick.model.dto.login.LoginResDto;
 import com.example.campick.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,14 +31,17 @@ public class LoginController {
      */
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<?> join(@RequestBody @Valid JoinDto joinDto, BindingResult bindingResult) {
+    public ResponseEntity<?> join(@RequestBody @Valid JoinReqDto joinReqDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new UserNotFoundException("Input regex error or null", UserErrorCode.ILLEGAL_INPUT);
         }
-        loginService.join(joinDto);
 
-        return ResponseEntity.ok().build();
+        Long userIdx = loginService.join(joinReqDto);
+
+        JoinResDto joinResDto = new JoinResDto(userIdx, "생성에 성공했습니다.");
+
+        return ResponseEntity.ok(joinResDto);
 
     }
 

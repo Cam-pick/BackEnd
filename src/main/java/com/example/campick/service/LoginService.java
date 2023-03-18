@@ -3,9 +3,10 @@ package com.example.campick.service;
 import com.example.campick.error.UserErrorCode;
 import com.example.campick.exception.User.UserNotFoundException;
 import com.example.campick.jwt.JwtTokenProvider;
-import com.example.campick.model.dto.JoinDto;
-import com.example.campick.model.dto.LoginReqDto;
-import com.example.campick.model.dto.LoginResDto;
+import com.example.campick.model.dto.login.JoinReqDto;
+import com.example.campick.model.dto.login.JoinResDto;
+import com.example.campick.model.dto.login.LoginReqDto;
+import com.example.campick.model.dto.login.LoginResDto;
 import com.example.campick.model.entity.UserEntity;
 import com.example.campick.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,17 +28,18 @@ public class LoginService {
      * 회원가입
      */
     @Transactional
-    public void join(JoinDto joinDto) {
+    public Long join(JoinReqDto joinReqDto) {
 
-        userRepository.save(UserEntity.builder()
-                .uniqueId(joinDto.getUniqueId())
-                .nickname(joinDto.getNickname())
-                .password(passwordEncoder.encode(joinDto.getPassword()))
-                .introduce(joinDto.getIntroduce())
-                .email(joinDto.getEmail())
+        Long userIdx = userRepository.save(UserEntity.builder()
+                .uniqueId(joinReqDto.getUniqueId())
+                .nickname(joinReqDto.getNickname())
+                .password(passwordEncoder.encode(joinReqDto.getPassword()))
+                .introduce(joinReqDto.getIntroduce())
+                .email(joinReqDto.getEmail())
                 .role(ROLE_USER)
-                .build());
+                .build()).getUserIdx();
 
+        return userIdx;
     }
 
     /**
@@ -68,7 +70,7 @@ public class LoginService {
 
         UserEntity userEntity = userRepository.findByUserIdxAndStatus(userIdx, "A")
                 .orElseThrow(() -> new UserNotFoundException(
-                        "Invalid User Index", UserErrorCode.USER_INDEX_INVALID_EXCEPTION));
+                        "User Not Found In DB or Invalid Index", UserErrorCode.USER_INDEX_INVALID_EXCEPTION));
 
         userEntity.setStatus("D");
 

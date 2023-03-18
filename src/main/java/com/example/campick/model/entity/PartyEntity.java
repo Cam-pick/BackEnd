@@ -66,4 +66,19 @@ public class PartyEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 
+    public void update(String title, String contents, String imageUrl,
+                       String tag, Integer capacity, Timestamp startDate, Timestamp dueDate) {
+        this.title = title;
+        this.contents = contents;
+        this.imageUrl = imageUrl;
+        this.tag = tag;
+        this.capacity = capacity;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+    }
+
+    public void setImage(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }

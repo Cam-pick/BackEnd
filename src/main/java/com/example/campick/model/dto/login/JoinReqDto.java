@@ -1,4 +1,4 @@
-package com.example.campick.model.dto;
+package com.example.campick.model.dto.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Getter
 @Builder
-public class JoinDto {
+public class JoinReqDto {
     @NotNull(message = "아이디는 필수 값입니다.")
     @Pattern(regexp = "^[a-z]+[a-z0-9]{3,20}$")
     private String uniqueId; // 4~20자, 영문자 소문자로 시작하고 영문자, 숫자 포함
